@@ -68,6 +68,21 @@ uint rho(const unsigned char * buffer, uint nbits, uint bitfrom) {
 
 }
 
+uint bIndex(byte *checksum, uint length) {
+  uint index = 0;
+  uint b;
+  uint byteIdx = 0;
+  uint bitIdx = 0;
+  for (b = 0; b < length; b++) {
+      byteIdx = b / 8;
+      bitIdx  = b % 8;
+      if ((checksum[byteIdx] & (1 << bitIdx)) != 0) {
+        index += (1 << (length - b - 1));
+      }
+  }
+  return index;
+}
+
 uint bucketIndex(byte *checksum, uint length) {
   int index = 0;
   int exponent;
@@ -77,6 +92,9 @@ uint bucketIndex(byte *checksum, uint length) {
     for (uint j = 0; j < BITS_IN_BYTES && counter < length; j++) {
       exponent = length - ((i * BITS_IN_BYTES) + j) - 1;
       bit = (checksum[i] & bitflags[j]) == bitflags[j];
+      if (bit) {
+        // printf("bucketIndex: %u, j: %u\n", exponent, j);
+      }
       index += pow(2, exponent) * bit;
       counter++;
     }
@@ -84,14 +102,16 @@ uint bucketIndex(byte *checksum, uint length) {
   return index;
 }
 
+
+
 void computeMaxes(uint b, uint checksumLength, GENERATOR generator, byte *M) {
   byte *checksum;
   char *word;
-  uint j, first1;
+  uint j, jj, first1;
   uint  counter = 0;
   while ((word = generator(NULL)) != NULL) {
     checksum = str2md5(word, strlen(word));
-    j = bucketIndex(checksum, b);
+    j = bIndex(checksum, b);
     first1 = rho(checksum, checksumLength, b);
     M[j] = max(M[j], first1);
     free(checksum);
@@ -109,6 +129,7 @@ double computeLogLogCardinality(uint m, byte *M, double alpham) {
   double sum = 0, average;
   for (int j = 0; j < m; j++) {
     sum += M[j];
+    // printf("%u,", M[j]);
   }
   average = sum / m;
   E = alpham * m * pow(2, average);
@@ -182,7 +203,23 @@ char *lines(FILE *fp) {
 }
 
 
+
+
+void reverse(byte *arr, int length) {
+  byte temp;
+  for (int i = 0; i <= length / 2; i++) {
+    temp = arr[i];
+    arr[i] = arr[length - i - 1];
+    arr[length - i - 1] = temp;
+  }
+}
+
+
 int main(int argc, char **argv) {
+  // int length = 4;
+  // byte checksum[] = {158,147,209,155,};
+  // printf("bucketIndex: %u\n", bucketIndex(checksum, length));
+  // printf("bIndex:%u\n", bIndex(checksum, length));
     char *path = (char*)"1000000.txt";
     if (argc > 1) {
       path = argv[1];
