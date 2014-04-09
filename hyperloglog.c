@@ -167,18 +167,21 @@ double computeHyperCardinality(uint m, byte *M, double alpham) {
   return E;
 }
 
-double applyCorrections(double E, uint m, byte *M) {
-  uint V = 0;
-  double Estar = E;
+// double applyCorrections(double E, uint m, byte *M) {
+//   uint V = 0;
+//   double Estar = E;
 
-  if (E <= ((5 / 2) * m)) {
-    for (uint i = 0; i < m; i++) {
-      if (M[i] == 0) {
-        V++;
-      }
-    }
-  }
-}
+//   if (E <= ((5 / 2) * m)) {
+//     for (uint i = 0; i < m; i++) {
+//       if (M[i] == 0) {
+//         V++;
+//       }
+//     }
+//     if (V != 0) {
+//       Estar = 
+//     }
+//   }
+// }
 
 double hyperloglog(uint b, uint digestBitLength, FILE *fp) {
   uint m = (uint) pow(2, b);
