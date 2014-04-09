@@ -209,7 +209,7 @@ int main(int argc, char **argv) {
     }
     
     FILE *fp = fopen(path, "r");
-    // printf("hyperloglog: %u\n", (uint)hyperloglog(12, 32, lines));
+    // printf("hyperloglog: %u\n", (uint)hyperloglog(12, 32, fp));
     // printf("loglog:      %u\n", (uint)loglog(12, 32, fp));
     cardinalities card = bothlog(12, 32, fp);
     printf("loglog:      %u\nhyperloglog: %u\n", card.loglog, card.hyperloglog);
