@@ -75,10 +75,11 @@ Prevede prvnich bucketBitLength bitu na cislo
 bucketIndex(1001000010, 4) = 1001 = 9
 */
 uint bucketIndex(byte *digest, uint bucketBitLength, uint digestBitLength) {
+    int i;
     uint32_t index;
     uint bytesHashLength = 4;
     byte temparray[bytesHashLength];
-    for (int i = 0; i < bytesHashLength; i++) {
+    for (i = 0; i < bytesHashLength; i++) {
         temparray[bytesHashLength - i - 1]  = digest[i];
     }
     memcpy(&index, temparray, sizeof(uint));
@@ -123,9 +124,10 @@ byte *computeMaxes(uint b, uint digestBitLength, FILE *fp, uint m) {
 *************************************************/
 
 double computeLogLogCardinality(uint m, byte *M, double alpham) {
+    int j;
     double E = 0;
     double sum = 0, arithmeticMean;
-    for (int j = 0; j < m; j++) {
+    for (j = 0; j < m; j++) {
         sum += M[j];
     }
     arithmeticMean = sum / m; 
@@ -151,9 +153,10 @@ double computeHyperAlpha(unsigned int m) {
 }
 
 double computeHyperCardinality(uint m, byte *M, double alpham) {
+    int j;
     double E = 0;
     double sum = 0, harmonicMean;
-    for (int j = 0; j < m; j++) {
+    for (j = 0; j < m; j++) {
         sum += pow(2, -M[j]);
     }
     harmonicMean = m / sum; 
