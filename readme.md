@@ -2,9 +2,13 @@
 
 # Instalace
 
-Bude potřeba překladač Céčka. Většinou bývá nějaký pod příkazem cc.
+Bude potřeba překladač Céčka, používal jsem gcc. Na OS X by mělo stačit
 
-    $ cc hyperloglog.c -o hyperloglog
+    $ gcc ./hyperloglog.c -o hyperloglog
+
+Na Linuxu jsem použil:
+
+    $ gcc -lm -lcrypto ./hyperloglog.c -o hyperloglog
 
 Program má následující parametry:
 
