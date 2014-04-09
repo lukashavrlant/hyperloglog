@@ -128,12 +128,12 @@ byte *computeMaxes(uint b, uint digestBitLength, FILE *fp, uint m) {
 
 double computeLogLogCardinality(uint m, byte *M, double alpham) {
   double E = 0;
-  double sum = 0, arithmeticAverage;
+  double sum = 0, arithmeticMean;
   for (int j = 0; j < m; j++) {
     sum += M[j];
   }
-  arithmeticAverage = sum / m; 
-  E = alpham * m * pow(2, arithmeticAverage);
+  arithmeticMean = sum / m; 
+  E = alpham * m * pow(2, arithmeticMean);
   return E;
 }
 
@@ -158,12 +158,12 @@ double computeHyperAlpha(unsigned int m) {
 
 double computeHyperCardinality(uint m, byte *M, double alpham) {
   double E = 0;
-  double sum = 0, harmonicAverage;
+  double sum = 0, harmonicMean;
   for (int j = 0; j < m; j++) {
     sum += pow(2, -M[j]);
   }
-  harmonicAverage = m / sum; // harmonicky prumer
-  E = alpham * m * harmonicAverage;
+  harmonicMean = m / sum; // harmonicky prumer
+  E = alpham * m * harmonicMean;
   return E;
 }
 
