@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <stdint.h>
 
 #if defined(__APPLE__)
 #  define COMMON_DIGEST_FOR_OPENSSL
@@ -73,16 +74,16 @@ uint rho(const byte *digest, uint bitlength, uint bitfrom) {
 Prevede prvnich bucketBitLength bitu na cislo
 bucketIndex(1001000010, 4) = 1001 = 9
 */
-uint bucketIndex(byte *digest, uint bucketBitLength) {
-    uint index;
+uint bucketIndex(byte *digest, uint bucketBitLength, uint digestBitLength) {
+    uint32_t index;
     uint bytesHashLength = 4;
     byte temparray[bytesHashLength];
     for (int i = 0; i < bytesHashLength; i++) {
         temparray[bytesHashLength - i - 1]  = digest[i];
     }
     memcpy(&index, temparray, sizeof(uint));
-    index = index >> (32 - bucketBitLength);
-    return index;
+    index = index >> (digestBitLength - bucketBitLength);
+    return (uint)index;
 }
 
 // Precte jeden radek ze souboru, odstrani \n z konce radku
@@ -107,7 +108,7 @@ byte *computeMaxes(uint b, uint digestBitLength, FILE *fp, uint m) {
     byte *M = (byte*) calloc(m, sizeof(byte));
     while ((word = readline(fp, buffer, bufferlength)) != NULL) {
         digest = str2md5(word, (int)strlen(word));
-        j = bucketIndex(digest, b);
+        j = bucketIndex(digest, b, digestBitLength);
         first1 = rho(digest, digestBitLength, b);
         M[j] = max(M[j], first1);
         free(digest);

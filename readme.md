@@ -18,3 +18,5 @@ Příklad volání:
     $ ./hyperloglog ./1000000.txt
 
 Program vypíše počet unikátních slov v souboru vypočítaných podle algoritmů HyperLogLog a LogLog. 
+
+Program předpokládá, že se použije 32bitová hashová funkce. To je realizováno pomocí klasické MD5 hashovací funkce, ze které se vezme prvních 32 bitů. Při zvýšení počtu bitů je potřeba přepsat i funkci bucketIndex, protože ta natvrdo používá typ uint32_t, kvůli rychlosti. 
