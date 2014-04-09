@@ -14,10 +14,10 @@ Na Linuxu jsem použil:
 ## Ovládání
 Program má následující parametry:
 
-    hyperloglog <input file> [<b>]
+    hyperloglog <input file> [b]
 
 - <input file> je vstupní txt soubor. Předpokládá se, že na každém řádku je samostatné slovo, které má maximálně 255 znaků.
-- <b> je integer, který určuje, kolik bitů bude použito pro vytvoření substreamů. Platí, že bude použito m substreamů, kde m = 2^b. Očekávané hodnoty jsou 4--16. Výchozí hodnota je 12. 
+- b je integer, který určuje, kolik bitů bude použito pro vytvoření substreamů. Platí, že bude použito m substreamů, kde m = 2^b. Očekávané hodnoty jsou 4--16. Výchozí hodnota je 12. 
 
 Příklad volání:
 
